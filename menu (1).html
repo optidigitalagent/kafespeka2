@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Меню — Кафе СПЕКА</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --terracotta: #C4622D;
+  --terracotta-light: #D97B45;
+  --terracotta-pale: rgba(196, 98, 45, 0.12);
+  --sand: #F2EAD8;
+  --sand-dark: #E8DCC6;
+  --linen: #FAF6EE;
+  --charcoal: #1E1A17;
+  --charcoal-mid: #2E2925;
+  --text-dark: #2A2420;
+  --text-mid: #5E5248;
+  --text-light: #9A8E82;
+  --white: #FFFFFF;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --nav-h: 72px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--charcoal);
+  color: var(--white);
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+/* NAV */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: var(--nav-h); display: flex; align-items: center;
+  justify-content: space-between; padding: 0 48px;
+  background: var(--charcoal);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+}
+.nav-logo { display: flex; align-items: center; }
+.nav-logo img { height: 46px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4)); }
+.nav-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(255,255,255,0.65); transition: color 0.2s;
+}
+.nav-back:hover { color: var(--terracotta-light); }
+.nav-back svg { stroke: currentColor; }
+
+/* HERO */
+.menu-hero {
+  padding-top: calc(var(--nav-h) + 64px);
+  padding-bottom: 64px;
+  text-align: center;
+  background: linear-gradient(to bottom, var(--charcoal) 0%, #252018 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  position: relative;
+  overflow: hidden;
+}
+/* Decorative circle accent */
+.menu-hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(196, 98, 45, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.menu-hero-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--terracotta-light); margin-bottom: 20px;
+}
+.menu-hero-label::before, .menu-hero-label::after { content: '◆'; font-size: 7px; opacity: 0.6; }
+.menu-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(48px,8vw,96px);
+  font-weight: 700; line-height: 1; letter-spacing: -0.02em;
+  color: var(--white); margin-bottom: 16px;
+}
+.menu-hero p {
+  font-size: 15px; color: rgba(255,255,255,0.45); letter-spacing: 0.06em;
+}
+
+/* TABS */
+.menu-nav {
+  position: sticky; top: var(--nav-h); z-index: 100;
+  background: #1A1612;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 0 48px;
+  display: flex; gap: 0; overflow-x: auto;
+  scrollbar-width: none;
+}
+.menu-nav::-webkit-scrollbar { display: none; }
+.menu-nav-tab {
+  flex-shrink: 0;
+  padding: 18px 26px;
+  font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(255,255,255,0.42);
+  border-bottom: 2px solid transparent;
+  cursor: pointer; transition: color 0.2s, border-color 0.2s;
+  background: none; border-top: none; border-left: none; border-right: none;
+}
+.menu-nav-tab:hover { color: rgba(255,255,255,0.78); }
+.menu-nav-tab.active { color: var(--terracotta-light); border-bottom-color: var(--terracotta); }
+
+/* SECTIONS */
+.menu-section { display: none; padding: 64px 48px; max-width: 1280px; margin: 0 auto; }
+.menu-section.active { display: block; }
+.section-heading {
+  font-family: var(--font-display);
+  font-size: clamp(30px,4.5vw,52px);
+  font-weight: 700; color: var(--white);
+  margin-bottom: 8px;
+}
+.section-sub { font-size: 14px; color: rgba(255,255,255,0.38); letter-spacing: 0.06em; margin-bottom: 40px; }
+.terracotta-line { width: 40px; height: 3px; background: var(--terracotta); border-radius: 2px; margin: 14px 0 36px; }
+
+/* MENU GRID */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 24px;
+}
+.menu-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.menu-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 56px rgba(0,0,0,0.55);
+  border-color: rgba(196, 98, 45, 0.3);
+}
+.menu-card-img { aspect-ratio: 4/3; overflow: hidden; background: rgba(255,255,255,0.04); }
+.menu-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; display: block; }
+.menu-card:hover .menu-card-img img { transform: scale(1.06); }
+.menu-card-body { padding: 20px 22px 22px; }
+.menu-card-name { font-family: var(--font-display); font-size: 21px; font-weight: 600; color: var(--white); margin-bottom: 7px; line-height: 1.25; }
+.menu-card-desc { font-size: 13px; color: rgba(255,255,255,0.42); margin-bottom: 16px; line-height: 1.6; }
+.menu-card-footer { display: flex; align-items: center; justify-content: space-between; }
+.menu-card-price { font-size: 15px; font-weight: 600; color: var(--terracotta-light); }
+.menu-card-badge {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--terracotta-light);
+  border: 1px solid rgba(196, 98, 45, 0.35);
+  padding: 3px 8px; border-radius: 100px;
+}
+
+/* LIST STYLE */
+.menu-list { display: flex; flex-direction: column; gap: 0; }
+.menu-list-item {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.menu-list-item:last-child { border-bottom: none; }
+.menu-list-name { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--white); }
+.menu-list-desc { font-size: 13px; color: rgba(255,255,255,0.38); margin-top: 4px; line-height: 1.6; }
+.menu-list-price { flex-shrink: 0; font-size: 15px; font-weight: 600; color: var(--terracotta-light); padding-top: 4px; }
+
+/* BAR SUBHEADING */
+.bar-cat {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--terracotta-light); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.bar-cat::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+
+/* FOOTER */
+.menu-footer {
+  background: #141210; padding: 36px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  flex-wrap: wrap; gap: 16px;
+}
+.menu-footer p { font-size: 14px; color: rgba(255,255,255,0.35); }
+.menu-footer a { color: var(--terracotta-light); font-weight: 600; transition: color 0.2s; }
+.menu-footer a:hover { color: var(--terracotta); }
+
+@media (max-width: 768px) {
+  #nav { padding: 0 20px; }
+  .menu-nav { padding: 0 20px; }
+  .menu-section { padding: 48px 20px; }
+  .menu-footer { padding: 28px 20px; }
+  .menu-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .menu-hero { padding-top: calc(var(--nav-h) + 40px); padding-bottom: 40px; }
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="cafe-speka.html" class="nav-logo">
+    <img src="images/logo-speka.png" alt="Кафе Спека">
+  </a>
+  <a href="cafe-speka.html" class="nav-back">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    На головну
+  </a>
+</nav>
+
+<div class="menu-hero">
+  <span class="menu-hero-label">Кафе Спека · Горішні Плавні</span>
+  <h1>Наше меню</h1>
+  <p>Страви з любов'ю · Свіжі інгредієнти щодня</p>
+</div>
+
+<div class="menu-nav" role="tablist">
+  <button class="menu-nav-tab active" data-tab="stravy">Страви</button>
+  <button class="menu-nav-tab" data-tab="pizza">Піца</button>
+  <button class="menu-nav-tab" data-tab="pasta">Паста</button>
+  <button class="menu-nav-tab" data-tab="mangal">Мангал</button>
+  <button class="menu-nav-tab" data-tab="bar">Бар</button>
+</div>
+
+<!-- СТРАВИ -->
+<div class="menu-section active" id="tab-stravy">
+  <div class="section-heading">Страви</div>
+  <div class="terracotta-line"></div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=75" alt="М'ясна тарілка" loading="lazy"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">М'ясна тарілка</div>
+        <div class="menu-card-desc">Асорті м'яса з домашніми соусами, маринованими овочами та хрустким хлібом</div>
+        <div class="menu-card-footer"><span class="menu-card-price">від 280 грн</span></div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=75" alt="Салат Спека" loading="lazy"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Салат «Спека»</div>
+        <div class="menu-card-desc">Свіжі сезонні овочі, фета, оливки, заправка на основі трюфельного майонезу</div>
+        <div class="menu-card-footer"><span class="menu-card-price">від 210 грн</span></div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=75" alt="Курка по-тайськи" loading="lazy"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Курка по-тайськи</div>
+        <div class="menu-card-desc">Кисло-солодкий соус, болгарський перець, ананас, кунжут та кокосова рисова локшина</div>
+        <div class="menu-card-footer"><span class="menu-card-price">від 250 грн</span></div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=600&q=75" alt="Суп дня" loading="lazy"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Суп дня</div>
+        <div class="menu-card-desc">Щоденний суп від шеф-кухаря зі свіжих сезонних інгредієнтів</div>
+        <div class="menu-card-footer"><span class="menu-card-price">від 120 грн</span><span class="menu-card-badge">Сезонне</span></div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=600&q=75" alt="Бургер Спека" loading="lazy"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Бургер «Спека»</div>
+        <div class="menu-card-desc">Яловичина, карамелізована цибуля, сир чеддер, домашній бун, картопля фрі</div>
+        <div class="menu-card-footer"><span class="menu-card-price">від 320 грн</span></div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=600&q=75" alt="Риба дня" loading="lazy"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Риба дня</div>
+        <div class="menu-card-desc">Свіжа риба з овочами гриль, лимонним маслом та зеленим соусом</div>
+        <div class="menu-card-footer"><span class="menu-card-price">від 290 грн</span><span class="menu-card-badge">Щодня</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ПІЦА -->
+<div class="menu-section" id="tab-pizza">
+  <div class="section-heading">Піца</div>
+  <div class="terracotta-line"></div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=75" alt="Груша та горгонзола" loading="lazy"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Груша та горгонзола</div>
+        <div class="menu-card-desc">Груша, горгонзола, мигдаль, вершкова основа — незвичне поєднання смаків</div>
+        <div class="menu-card-footer"><span class="menu-card-price">від 410 грн</span><span class="menu-card-badge">Автор.</span></div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1573821663912-6df460f9c684?w=600&q=75" alt="Пепероні" loading="lazy"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Пепероні</div>
+        <div class="menu-card-desc">Гостра пепероні, сир пармезан, орегано, моцарела, томатна основа</div>
+        <div class="menu-card-footer"><span class="menu-card-price">від 450 грн</span></div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600&q=75" alt="Маргарита" loading="lazy"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Маргарита</div>
+        <div class="menu-card-desc">Моцарела, помідори, свіжий базилік, томатна основа — класика на дровах</div>
+        <div class="menu-card-footer"><span class="menu-card-price">від 330 грн</span></div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=75" alt="Чотири сири" loading="lazy"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Чотири сири</div>
+        <div class="menu-card-desc">Моцарела, горгонзола, пармезан, ементаль та мед трюфелю</div>
+        <div class="menu-card-footer"><span class="menu-card-price">від 480 грн</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ПАСТА -->
+<div class="menu-section" id="tab-pasta">
+  <div class="section-heading">Паста</div>
+  <div class="terracotta-line"></div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&q=75" alt="Карбонара" loading="lazy"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Паста карбонара</div>
+        <div class="menu-card-desc">Домашня паста тальятеле, вершковий соус, бекон, пармезан, мікрозелень</div>
+        <div class="menu-card-footer"><span class="menu-card-price">від 270 грн</span></div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=600&q=75" alt="Паста з лососем" loading="lazy"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Паста з лососем</div>
+        <div class="menu-card-desc">Тальятеле, лосось гравлакс, помідори чері, вершковий соус, пармезан</div>
+        <div class="menu-card-footer"><span class="menu-card-price">від 380 грн</span></div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1516100882582-96c3a05fe590?w=600&q=75" alt="Паста з грибами" loading="lazy"></div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Паста з грибами</div>
+        <div class="menu-card-desc">Домашня паста, вершково-грибний соус, трюфельний майонез, мікрозелень</div>
+        <div class="menu-card-footer"><span class="menu-card-price">від 260 грн</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- МАНГАЛ -->
+<div class="menu-section" id="tab-mangal">
+  <div class="section-heading">Мангал</div>
+  <p class="section-sub">Пт – Нд · весь день · просто неба</p>
+  <div class="terracotta-line"></div>
+  <div class="menu-list">
+    <div class="menu-list-item">
+      <div><div class="menu-list-name">Шашлик зі свинини</div><div class="menu-list-desc">Маринований в трав'яному маринаді, подається з овочами гриль</div></div>
+      <div class="menu-list-price">від 280 грн</div>
+    </div>
+    <div class="menu-list-item">
+      <div><div class="menu-list-name">Курячі стегна</div><div class="menu-list-desc">Домашній маринад, паприка, часник, свіжі трави</div></div>
+      <div class="menu-list-price">від 220 грн</div>
+    </div>
+    <div class="menu-list-item">
+      <div><div class="menu-list-name">Ребра барбекю</div><div class="menu-list-desc">Томатний соус BBQ, мед, дим — ніжне м'ясо на кістці</div></div>
+      <div class="menu-list-price">від 380 грн</div>
+    </div>
+    <div class="menu-list-item">
+      <div><div class="menu-list-name">Кукурудза гриль</div><div class="menu-list-desc">З вершковим маслом та сирною крихтою</div></div>
+      <div class="menu-list-price">від 80 грн</div>
+    </div>
+    <div class="menu-list-item">
+      <div><div class="menu-list-name">Овочі гриль</div><div class="menu-list-desc">Цукіні, солодкий перець, баклажан, помідори чері, зелень</div></div>
+      <div class="menu-list-price">від 150 грн</div>
+    </div>
+  </div>
+</div>
+
+<!-- БАР -->
+<div class="menu-section" id="tab-bar">
+  <div class="section-heading">Бар</div>
+  <div class="terracotta-line"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;flex-wrap:wrap">
+    <div>
+      <div class="bar-cat">Коктейлі</div>
+      <div class="menu-list">
+        <div class="menu-list-item"><div><div class="menu-list-name">Мохіто</div><div class="menu-list-desc">Класичний або полуничний</div></div><div class="menu-list-price">від 150 грн</div></div>
+        <div class="menu-list-item"><div><div class="menu-list-name">Апероль Шпріц</div><div class="menu-list-desc">Апероль, просекко, содова, апельсин</div></div><div class="menu-list-price">від 180 грн</div></div>
+        <div class="menu-list-item"><div><div class="menu-list-name">Маргарита</div><div class="menu-list-desc">Текіла, трипл сек, лимонний сік</div></div><div class="menu-list-price">від 190 грн</div></div>
+        <div class="menu-list-item"><div><div class="menu-list-name">Пінья Колада</div><div class="menu-list-desc">Ром, кокосове молоко, ананасовий сік</div></div><div class="menu-list-price">від 170 грн</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="bar-cat">Безалкогольні</div>
+      <div class="menu-list">
+        <div class="menu-list-item"><div><div class="menu-list-name">Лимонад</div><div class="menu-list-desc">Свіжий, на вибір 5 смаків</div></div><div class="menu-list-price">від 90 грн</div></div>
+        <div class="menu-list-item"><div><div class="menu-list-name">Свіжовичавлений сік</div><div class="menu-list-desc">Апельсин, яблуко, морква</div></div><div class="menu-list-price">від 100 грн</div></div>
+        <div class="menu-list-item"><div><div class="menu-list-name">Смузі</div><div class="menu-list-desc">Тропічний, ягідний, зелений</div></div><div class="menu-list-price">від 120 грн</div></div>
+        <div class="menu-list-item"><div><div class="menu-list-name">Кава</div><div class="menu-list-desc">Еспресо, американо, капучино, лате</div></div><div class="menu-list-price">від 60 грн</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="menu-footer">
+  <p>© 2026 Кафе Спека — Горішні Плавні</p>
+  <p><a href="cafe-speka.html">← Повернутися на сайт</a></p>
+</div>
+
+<script>
+document.querySelectorAll('.menu-nav-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.tab;
+    document.querySelectorAll('.menu-nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.menu-section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + target).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>

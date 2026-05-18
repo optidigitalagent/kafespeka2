@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Кафе Спека — кафе на березі затоки Барбара у Горішніх Плавнях. Смачна їжа на кожен день, відкрита тераса, банкети та події. Пт–Нд 10:00–23:00.">
+<title>Кафе СПЕКА — Затока Барбара | Горішні Плавні</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --terracotta: #C4622D;
+    --terracotta-light: #D97B45;
+    --terracotta-pale: rgba(196, 98, 45, 0.12);
+    --sand: #F2EAD8;
+    --sand-dark: #E8DCC6;
+    --linen: #FAF6EE;
+    --charcoal: #1E1A17;
+    --charcoal-mid: #2E2925;
+    --olive: #5A6840;
+    --text-dark: #2A2420;
+    --text-mid: #5E5248;
+    --text-light: #9A8E82;
+    --white: #FFFFFF;
+    --space-1: 8px;
+    --space-2: 16px;
+    --space-3: 24px;
+    --space-4: 32px;
+    --space-5: 48px;
+    --space-6: 64px;
+    --space-7: 96px;
+    --space-8: 128px;
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --nav-h: 72px;
+  }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--linen);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  img { display: block; max-width: 100%; }
+  a { text-decoration: none; color: inherit; }
+  button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+  :focus-visible {
+    outline: 2px solid var(--terracotta);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* ===== SCROLL ANIMATIONS ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-36px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(36px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  /* ===== NAVIGATION ===== */
+  #nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-5);
+    transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+  }
+  #nav.scrolled {
+    background: var(--charcoal);
+    box-shadow: 0 2px 32px rgba(0,0,0,0.3);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    text-transform: uppercase;
+  }
+  .nav-logo span { color: var(--terracotta-light); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.82);
+    position: relative;
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 0; height: 1.5px;
+    background: var(--terracotta-light);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--terracotta-light); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--terracotta) !important;
+    color: var(--white) !important;
+    padding: 10px 22px;
+    border-radius: var(--radius-sm);
+    font-weight: 600 !important;
+    letter-spacing: 0.08em;
+    transition: background 0.2s, transform 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--terracotta-light) !important; transform: translateY(-1px); }
+  .nav-cta::after { display: none !important; }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: var(--space-1);
+    z-index: 1100;
+  }
+  .hamburger span {
+    display: block;
+    width: 26px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-drawer {
+    position: fixed;
+    inset: 0;
+    background: var(--charcoal);
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .nav-drawer.open { transform: translateX(0); }
+  .nav-drawer a {
+    font-size: 26px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--white);
+    transition: color 0.2s;
+  }
+  .nav-drawer a:hover { color: var(--terracotta-light); }
+  .nav-drawer .drawer-cta {
+    margin-top: var(--space-2);
+    background: var(--terracotta);
+    color: var(--white);
+    padding: 14px 32px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .drawer-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: rgba(255,255,255,0.08);
+    color: var(--white);
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, background 0.2s;
+    z-index: 1200;
+  }
+  .drawer-close:hover { color: var(--terracotta-light); background: rgba(255,255,255,0.12); }
+
+  /* ===== HERO ===== */
+  #hero {
+    position: relative;
+    height: 100svh;
+    min-height: 600px;
+    overflow: hidden;
+  }
+
+  .hero-video-wrap {
+    position: absolute;
+    inset: 0;
+    background: var(--charcoal);
+  }
+  .hero-video-wrap video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.72;
+  }
+  .hero-poster {
+    position: absolute;
+    inset: 0;
+    background: var(--charcoal);
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(30,20,16,0.78) 0%, rgba(30,20,16,0.28) 55%, rgba(30,20,16,0.12) 100%);
+  }
+  /* Subtle warm grain texture overlay */
+  .hero-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-5) var(--space-3);
+    padding-top: calc(var(--nav-h) + var(--space-5));
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--terracotta-light);
+    border: 1px solid rgba(217, 123, 69, 0.4);
+    padding: 7px 20px;
+    border-radius: 100px;
+    margin-bottom: var(--space-4);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+  .hero-badge::before { content: '◆'; font-size: 8px; }
+
+  .hero-logo-img {
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.5s forwards;
+    margin-bottom: var(--space-3);
+  }
+
+  .hero-tagline {
+    font-size: clamp(13px, 2vw, 16px);
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: var(--space-1);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+  .hero-sub {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 3vw, 26px);
+    font-style: italic;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: var(--space-5);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1s forwards;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.2s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--terracotta);
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--terracotta);
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    background: var(--terracotta-light);
+    border-color: var(--terracotta-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(196, 98, 45, 0.45);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    border-radius: var(--radius-md);
+    border: 2px solid rgba(255,255,255,0.45);
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  }
+  .btn-ghost:hover {
+    border-color: var(--white);
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: var(--space-4);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.45);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: fadeIn 1s ease 2s both;
+  }
+  .hero-scroll-line {
+    width: 1px; height: 44px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.45), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.45; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(0.7); }
+  }
+
+  /* ===== SECTION BASE ===== */
+  section { position: relative; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 var(--space-5); }
+  @media (max-width: 768px) { .container { padding: 0 var(--space-3); } }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: var(--space-2);
+  }
+  .section-label::before { content: '—'; opacity: 0.6; }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(34px, 5.5vw, 68px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .terracotta-divider {
+    width: 40px; height: 3px;
+    background: var(--terracotta);
+    border-radius: 2px;
+    margin: var(--space-3) 0;
+  }
+
+  /* ===== АТМОСФЕРА ===== */
+  #atmosfera {
+    padding: var(--space-8) 0;
+    background: var(--linen);
+    overflow: hidden;
+  }
+  .atmosfera-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    align-items: center;
+  }
+  .atmosfera-img {
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    box-shadow: 0 32px 72px rgba(30,20,16,0.16);
+  }
+  .atmosfera-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+  .atmosfera-img:hover img { transform: scale(1.04); }
+  .atmosfera-img-badge {
+    position: absolute;
+    bottom: var(--space-3); left: var(--space-3);
+    background: var(--terracotta);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: 100px;
+  }
+  .atmosfera-text { padding: var(--space-3) 0; }
+  .atmosfera-text .section-title { color: var(--charcoal); margin-bottom: var(--space-3); }
+  .atmosfera-text p {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--text-mid);
+    margin-bottom: var(--space-3);
+  }
+  .atmosfera-features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+  .atmosfera-feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-dark);
+  }
+  .feature-icon {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: var(--terracotta-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  /* ===== MENU ===== */
+  #menu {
+    padding: var(--space-8) 0;
+    background: var(--charcoal-mid);
+  }
+  #menu .section-title { color: var(--white); }
+  #menu .section-label { color: var(--terracotta-light); }
+  #menu .section-label::before { color: var(--terracotta-light); }
+
+  .menu-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: var(--space-5);
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .menu-tabs {
+    display: flex;
+    gap: 4px;
+    background: rgba(255,255,255,0.06);
+    padding: 5px;
+    border-radius: var(--radius-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-5);
+  }
+  .menu-tab {
+    padding: 10px 22px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background: none;
+    font-family: var(--font-body);
+  }
+  .menu-tab:hover { color: rgba(255,255,255,0.85); }
+  .menu-tab.active {
+    background: var(--terracotta);
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+
+  .menu-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    cursor: default;
+  }
+  .menu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 52px rgba(0,0,0,0.4);
+    border-color: rgba(196, 98, 45, 0.35);
+  }
+  .menu-card-img {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: rgba(255,255,255,0.04);
+    position: relative;
+  }
+  .menu-card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .menu-card:hover .menu-card-img img { transform: scale(1.06); }
+  .menu-card-body { padding: var(--space-3); }
+  .menu-card-name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 6px;
+    line-height: 1.25;
+  }
+  .menu-card-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.48);
+    margin-bottom: var(--space-2);
+    line-height: 1.6;
+  }
+  .menu-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .menu-card-price {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--terracotta-light);
+    letter-spacing: 0.03em;
+  }
+  .menu-card-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .menu-download { text-align: center; margin-top: var(--space-5); }
+
+  /* ===== PRO NAS ===== */
+  #pro-nas {
+    padding: var(--space-8) 0;
+    background: var(--charcoal);
+    overflow: hidden;
+  }
+  .pro-nas-inner {
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    min-height: 540px;
+  }
+  .pro-nas-bg {
+    position: absolute;
+    inset: 0;
+  }
+  .pro-nas-bg img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .pro-nas-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, rgba(30,26,23,0.94) 38%, rgba(30,26,23,0.5) 100%);
+  }
+  .pro-nas-content {
+    position: relative;
+    z-index: 2;
+    padding: var(--space-7) var(--space-6);
+    max-width: 580px;
+  }
+  .pro-nas-content .section-title { color: var(--white); margin-bottom: var(--space-3); }
+  .pro-nas-content p {
+    font-size: 16px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: var(--space-5);
+  }
+  .stats-row {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .stat-item { display: flex; flex-direction: column; gap: 4px; }
+  .stat-icon { font-size: 26px; }
+  .stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--terracotta-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .stat-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    max-width: 140px;
+  }
+
+  /* ===== GALLERY ===== */
+  #gallery {
+    padding: var(--space-8) 0;
+    background: var(--sand);
+  }
+  .gallery-header { text-align: center; margin-bottom: var(--space-6); }
+  .gallery-header .section-title { color: var(--charcoal); }
+
+  .masonry { columns: 3; column-gap: var(--space-2); }
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: var(--space-2);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .masonry-item img { width: 100%; display: block; transition: transform 0.5s ease; }
+  .masonry-item:hover img { transform: scale(1.04); }
+  .masonry-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(196, 98, 45, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+  }
+  .masonry-overlay svg { opacity: 0; transition: opacity 0.3s; width: 38px; height: 38px; fill: white; }
+  .masonry-item:hover .masonry-overlay { background: rgba(196, 98, 45, 0.45); }
+  .masonry-item:hover .masonry-overlay svg { opacity: 1; }
+
+  .gallery-footer { text-align: center; margin-top: var(--space-5); }
+
+  .btn-outline-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--charcoal);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--charcoal);
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    font-family: var(--font-body);
+  }
+  .btn-outline-dark:hover {
+    background: var(--charcoal);
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+
+  /* ===== BOOKING ===== */
+  #booking {
+    padding: var(--space-8) 0;
+    background: var(--sand-dark);
+  }
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-7);
+    align-items: start;
+  }
+  .booking-info .section-title { color: var(--charcoal); margin-bottom: var(--space-3); }
+  .booking-info p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-mid);
+    margin-bottom: var(--space-4);
+  }
+  .booking-phone { display: flex; flex-direction: column; gap: 6px; }
+  .booking-phone a {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--charcoal);
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
+  }
+  .booking-phone a:hover { color: var(--terracotta); }
+  .booking-phone-label {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    font-weight: 600;
+  }
+  .booking-hours {
+    margin-top: var(--space-3);
+    padding: var(--space-3);
+    background: rgba(196, 98, 45, 0.09);
+    border-left: 3px solid var(--terracotta);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .booking-hours p { font-size: 14px; color: var(--text-dark); margin: 0; font-weight: 500; }
+  .booking-hours strong { color: var(--terracotta); }
+
+  .booking-form-wrap {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5);
+    box-shadow: 0 16px 56px rgba(0,0,0,0.07);
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+  }
+  .form-group label .req { color: var(--terracotta); margin-left: 2px; }
+  .form-input, .form-select, .form-textarea {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--text-dark);
+    background: var(--linen);
+    border: 1.5px solid rgba(0,0,0,0.1);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--terracotta);
+    box-shadow: 0 0 0 3px rgba(196, 98, 45, 0.14);
+  }
+  .form-input.error, .form-select.error, .form-textarea.error { border-color: #D94040; }
+  .form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235E5248' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+  .form-textarea { resize: vertical; min-height: 100px; }
+  .form-error { font-size: 12px; color: #D94040; display: none; margin-top: -4px; }
+  .form-error.show { display: block; }
+  .form-submit {
+    width: 100%;
+    background: var(--terracotta);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    margin-top: var(--space-1);
+  }
+  .form-submit:hover {
+    background: var(--terracotta-light);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(196, 98, 45, 0.38);
+  }
+
+  #toast {
+    position: fixed;
+    bottom: var(--space-4); right: var(--space-4);
+    background: var(--charcoal);
+    color: var(--white);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+    border-left: 4px solid var(--terracotta);
+    font-size: 15px;
+    font-weight: 500;
+    z-index: 9999;
+    transform: translateY(120%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 340px;
+  }
+  #toast.show { transform: translateY(0); }
+
+  /* ===== FOOTER ===== */
+  #footer { background: var(--charcoal); padding: var(--space-7) 0 0; }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: var(--space-6);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .footer-logo-text {
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: var(--space-2);
+    color: var(--white);
+  }
+  .footer-tagline {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+  }
+  .footer-col h4 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terracotta-light);
+    margin-bottom: var(--space-3);
+  }
+  .footer-col p, .footer-col a {
+    font-size: 14px;
+    color: rgba(255,255,255,0.62);
+    line-height: 1.8;
+    display: block;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--terracotta-light); }
+  .footer-socials { display: flex; gap: var(--space-2); margin-top: var(--space-3); }
+  .footer-social {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s;
+    color: rgba(255,255,255,0.65);
+  }
+  .footer-social:hover {
+    background: var(--terracotta);
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+  .footer-social svg { width: 18px; height: 18px; fill: currentColor; }
+
+  .footer-map {
+    margin-top: var(--space-5);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    height: 220px;
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .footer-map iframe { width: 100%; height: 100%; border: none; filter: grayscale(20%) invert(5%); }
+
+  .footer-bottom {
+    padding: var(--space-3) 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.32); letter-spacing: 0.03em; }
+  .footer-bottom a { color: rgba(255,255,255,0.32); transition: color 0.2s; }
+  .footer-bottom a:hover { color: var(--terracotta-light); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .menu-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-grid > :first-child { grid-column: 1 / -1; }
+  }
+  @media (max-width: 768px) {
+    :root { --space-8: 80px; --space-7: 64px; --space-6: 48px; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .atmosfera-grid { grid-template-columns: 1fr; }
+    .atmosfera-img { aspect-ratio: 16/9; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .masonry { columns: 2; }
+    .booking-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: var(--space-4); }
+    .pro-nas-content { padding: var(--space-5) var(--space-3); }
+    .stats-row { gap: var(--space-3); }
+  }
+  @media (max-width: 480px) {
+    .masonry { columns: 1; }
+    .hero-ctas { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-ghost { width: 100%; max-width: 280px; justify-content: center; }
+    .booking-form-wrap { padding: var(--space-3); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="nav" role="navigation" aria-label="Головна навігація">
+  <a href="#hero" class="nav-logo" aria-label="Кафе Спека — на головну">
+    <img src="images/logo-speka.png" alt="Спека" style="height:46px;width:auto;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.4));">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="menu.html">Меню</a></li>
+    <li><a href="#pro-nas">Про нас</a></li>
+    <li><a href="#gallery">Галерея</a></li>
+    <li><a href="#contacts">Контакти</a></li>
+    <li><a href="#booking" class="nav-cta">Бронювання</a></li>
+  </ul>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Відкрити меню" aria-expanded="false" aria-controls="navDrawer">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="nav-drawer" id="navDrawer" role="dialog" aria-label="Мобільна навігація">
+  <button class="drawer-close" id="drawerClose" aria-label="Закрити меню">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <a href="menu.html">Меню</a>
+  <a href="#pro-nas">Про нас</a>
+  <a href="#gallery">Галерея</a>
+  <a href="#contacts">Контакти</a>
+  <a href="#booking" class="drawer-cta">Бронювання</a>
+</div>
+
+<!-- HERO -->
+<section id="hero" aria-label="Головна секція">
+  <div class="hero-video-wrap">
+    <div class="hero-poster" role="img" aria-label="Тераса кафе Спека"></div>
+    <video autoplay muted loop playsinline aria-hidden="true">
+      <source src="https://res.cloudinary.com/dpzmmiaov/video/upload/q_auto/f_auto/v1779028501/0510_3_kxaden.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <span class="hero-badge">Горішні Плавні · Затока Барбара</span>
+
+    <div class="hero-logo-img" aria-label="Кафе Спека">
+      <img src="images/logo-speka.png" alt="Логотип кафе Спека" style="max-height:170px;width:auto;filter:drop-shadow(0 4px 32px rgba(0,0,0,0.55));">
+    </div>
+
+    <p class="hero-tagline">Кафе на березі затоки Барбара</p>
+    <p class="hero-sub">Смачна їжа на кожен день</p>
+
+    <div class="hero-ctas">
+      <a href="menu.html" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Переглянути меню
+      </a>
+      <a href="#booking" class="btn-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Забронювати столик
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="hero-scroll-line"></div>
+    <span>гортати</span>
+  </div>
+</section>
+
+<!-- АТМОСФЕРА -->
+<section id="atmosfera" aria-labelledby="atmosfera-title">
+  <div class="container">
+    <div class="atmosfera-grid">
+      <div class="atmosfera-img reveal-left">
+        <img src="https://images.unsplash.com/photo-1559329007-2aba8c8bb3b7?w=800&q=80" alt="Відкрита тераса кафе Спека" loading="lazy">
+        <div class="atmosfera-img-badge">Відкрита тераса</div>
+      </div>
+
+      <div class="atmosfera-text reveal-right">
+        <span class="section-label">Наша атмосфера</span>
+        <h2 class="section-title" id="atmosfera-title">Місце, де час зупиняється</h2>
+        <div class="terracotta-divider"></div>
+        <p>На самому березі мальовничої затоки Барбара — там, де вітер пахне водою і свободою — розкинулась затишна тераса кафе Спека. Тут час тече повільніше, розмови — щиріші, а їжа — смачніша.</p>
+        <p>Ми готуємо щодня зі справжніми інгредієнтами, без компромісів. Домашня паста, піца з дровяної печі, мангал просто неба — кожна страва розказує свою історію.</p>
+
+        <div class="atmosfera-features">
+          <div class="atmosfera-feature">
+            <div class="feature-icon" aria-hidden="true">🌅</div>
+            <span>Тераса з видом на затоку Барбара</span>
+          </div>
+          <div class="atmosfera-feature">
+            <div class="feature-icon" aria-hidden="true">🔥</div>
+            <span>Мангал просто неба щоп'ятниці–неділі</span>
+          </div>
+          <div class="atmosfera-feature">
+            <div class="feature-icon" aria-hidden="true">🎉</div>
+            <span>Банкети, корпоративи та приватні події</span>
+          </div>
+          <div class="atmosfera-feature">
+            <div class="feature-icon" aria-hidden="true">🕙</div>
+            <span>Пт–Нд: відчинено з 10:00 до 23:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- МЕНЮ -->
+<section id="menu" aria-labelledby="menu-title">
+  <div class="container">
+    <div class="menu-header">
+      <div class="reveal">
+        <span class="section-label">Що ми готуємо</span>
+        <h2 class="section-title" id="menu-title">Наше меню</h2>
+      </div>
+      <div class="reveal">
+        <a href="menu.html" class="btn-ghost">Переглянути меню →</a>
+      </div>
+    </div>
+
+    <div class="menu-tabs reveal" role="tablist" aria-label="Категорії меню">
+      <button class="menu-tab active" role="tab" aria-selected="true" data-tab="stravy">Страви</button>
+      <button class="menu-tab" role="tab" aria-selected="false" data-tab="pizza">Піца</button>
+      <button class="menu-tab" role="tab" aria-selected="false" data-tab="pasta">Паста</button>
+      <button class="menu-tab" role="tab" aria-selected="false" data-tab="bar">Бар</button>
+      <button class="menu-tab" role="tab" aria-selected="false" data-tab="mangal">Мангал</button>
+    </div>
+
+    <div class="menu-panel active reveal" id="tab-stravy" role="tabpanel">
+      <div class="menu-grid">
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=75" alt="М'ясна тарілка" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">М'ясна тарілка</h3>
+            <p class="menu-card-desc">Асорті м'яса з домашніми соусами, маринованими овочами та хрустким хлібом</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 280 грн</span></div>
+          </div>
+        </article>
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=75" alt="Салат Спека" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">Салат «Спека»</h3>
+            <p class="menu-card-desc">Свіжі сезонні овочі, фета, оливки, заправка на основі трюфельного майонезу</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 210 грн</span></div>
+          </div>
+        </article>
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=75" alt="Курка по-тайськи" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">Курка по-тайськи</h3>
+            <p class="menu-card-desc">Кисло-солодкий соус, болгарський перець, ананас, кунжут та кокосова рисова локшина</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 250 грн</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="tab-pizza" role="tabpanel">
+      <div class="menu-grid">
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=75" alt="Піца з грушею та горгонзолою" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">Груша та горгонзола</h3>
+            <p class="menu-card-desc">Груша, горгонзола, мигдаль, вершкова основа — незвичне поєднання смаків</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 410 грн</span></div>
+          </div>
+        </article>
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1573821663912-6df460f9c684?w=600&q=75" alt="Пепероні" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">Пепероні</h3>
+            <p class="menu-card-desc">Гостра пепероні, сир пармезан, орегано, моцарела, томатна основа</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 450 грн</span></div>
+          </div>
+        </article>
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600&q=75" alt="Маргарита" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">Маргарита</h3>
+            <p class="menu-card-desc">Моцарела, помідори, свіжий базилік, томатна основа — класика на дровах</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 330 грн</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="tab-pasta" role="tabpanel">
+      <div class="menu-grid">
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&q=75" alt="Паста карбонара" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">Паста карбонара</h3>
+            <p class="menu-card-desc">Домашня паста тальятеле, вершковий соус, бекон, пармезан, мікрозелень</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 270 грн</span></div>
+          </div>
+        </article>
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=600&q=75" alt="Паста з лососем" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">Паста з лососем</h3>
+            <p class="menu-card-desc">Тальятеле, лосось гравлакс, помідори чері, вершковий соус, пармезан</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 380 грн</span></div>
+          </div>
+        </article>
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1516100882582-96c3a05fe590?w=600&q=75" alt="Паста з грибами" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">Паста з грибами</h3>
+            <p class="menu-card-desc">Домашня паста, вершково-грибний соус, трюфельний майонез, мікрозелень</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 260 грн</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="tab-bar" role="tabpanel">
+      <div class="menu-grid">
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=600&q=75" alt="Мохіто" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">Мохіто</h3>
+            <p class="menu-card-desc">Класичний або полуничний — з м'ятою, лаймом та свіжим льодом</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 150 грн</span></div>
+          </div>
+        </article>
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1516594798947-e65505dbb29d?w=600&q=75" alt="Лимонад" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">Домашній лимонад</h3>
+            <p class="menu-card-desc">Свіжі фрукти, лід, газована вода — освіжаючий смак літа</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 90 грн</span></div>
+          </div>
+        </article>
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75" alt="Вино та коктейлі" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">Вино та коктейлі</h3>
+            <p class="menu-card-desc">Великий вибір вин, авторські коктейлі та класичні напої від нашого бармена</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 100 грн</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="tab-mangal" role="tabpanel">
+      <div class="menu-grid">
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=75" alt="Сет м'ясний" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">Сет м'ясний</h3>
+            <p class="menu-card-desc">Шашлик зі свинини, філе курки, кебаб з яловичини, соус копчений барбекю та аджика домашня</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 1150 грн</span></div>
+          </div>
+        </article>
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&q=75" alt="Шашлик зі свинини" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">Шашлик зі свинини</h3>
+            <p class="menu-card-desc">З ошийка, маринована цибуля, аджика домашня, хліб з мангалу</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 350 грн</span></div>
+          </div>
+        </article>
+        <article class="menu-card">
+          <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=75" alt="Кебаб з яловичини" loading="lazy"></div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-name">Кебаб з яловичини</h3>
+            <p class="menu-card-desc">Мікс салату з томатом та сиром фета, соус барбекю, маринована цибуля марс, хліб з мангалу</p>
+            <div class="menu-card-footer"><span class="menu-card-price">від 380 грн</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="menu-download reveal">
+      <a href="menu.html" class="btn-ghost">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Завантажити повне меню PDF
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ПРО НАС -->
+<section id="pro-nas" aria-labelledby="pronas-title">
+  <div class="container">
+    <div class="pro-nas-inner reveal">
+      <div class="pro-nas-bg">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80" alt="Вечірня тераса кафе Спека" loading="lazy">
+      </div>
+      <div class="pro-nas-content">
+        <span class="section-label" style="color:var(--terracotta-light)">Наша історія</span>
+        <h2 class="section-title" id="pronas-title">Тепло. Смак. Затока.</h2>
+        <div class="terracotta-divider"></div>
+        <p>Кафе Спека народилося з любові до справжньої їжі і живих зустрічей. Ми відкрились на березі затоки Барбара — щоб кожен, хто прийде, міг відчути цю особливу магію місця.</p>
+        <p>Наша команда готує щодня: домашній хліб, свіжа паста, м'ясо з мангалу під відкритим небом. Без напівфабрикатів, без поспіху — тільки щирість у кожній страві.</p>
+        <div class="stats-row">
+          <div class="stat-item">
+            <span class="stat-icon" aria-hidden="true">🕙</span>
+            <span class="stat-label">з 10:00 до 23:00</span>
+            <span class="stat-desc">Пт–Нд, цілий сезон</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon" aria-hidden="true">🌿</span>
+            <span class="stat-label">Тераса</span>
+            <span class="stat-desc">Відкрите повітря, природа</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon" aria-hidden="true">🎊</span>
+            <span class="stat-label">Банкети</span>
+            <span class="stat-desc">Приватні події та свята</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ГАЛЕРЕЯ -->
+<section id="gallery" aria-labelledby="gallery-title">
+  <div class="container">
+    <div class="gallery-header reveal">
+      <span class="section-label">Instagram @cafespeka</span>
+      <h2 class="section-title" id="gallery-title">Наша галерея</h2>
+    </div>
+    <div class="masonry reveal" role="list">
+      <div class="masonry-item" role="listitem">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=75" alt="Вечірня тераса" loading="lazy">
+        <div class="masonry-overlay" aria-hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+      </div>
+      <div class="masonry-item" role="listitem">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=75" alt="М'ясна тарілка" loading="lazy">
+        <div class="masonry-overlay" aria-hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+      </div>
+      <div class="masonry-item" role="listitem">
+        <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=600&q=75" alt="Мохіто" loading="lazy">
+        <div class="masonry-overlay" aria-hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+      </div>
+      <div class="masonry-item" role="listitem">
+        <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&q=75" alt="Паста карбонара" loading="lazy">
+        <div class="masonry-overlay" aria-hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+      </div>
+      <div class="masonry-item" role="listitem">
+        <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=600&q=75" alt="Банкетний зал" loading="lazy">
+        <div class="masonry-overlay" aria-hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+      </div>
+      <div class="masonry-item" role="listitem">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=75" alt="Інтер'єр кафе" loading="lazy">
+        <div class="masonry-overlay" aria-hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+      </div>
+    </div>
+    <div class="gallery-footer reveal">
+      <a href="https://www.instagram.com/cafespeka" target="_blank" rel="noopener noreferrer" class="btn-outline-dark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Більше в Instagram @cafespeka
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- БРОНЮВАННЯ -->
+<section id="booking" aria-labelledby="booking-title">
+  <div class="container">
+    <div class="booking-grid">
+      <div class="booking-info reveal-left">
+        <span class="section-label">Резервування</span>
+        <h2 class="section-title" id="booking-title">Зарезервуйте столик</h2>
+        <div class="terracotta-divider"></div>
+        <p>Плануєте відзначити особливу подію або просто хочете насолодитися вечором без поспіху? Залиште заявку і ми підготуємо для вас найкраще місце.</p>
+        <div class="booking-phone">
+          <span class="booking-phone-label">Або зателефонуйте нам</span>
+          <a href="tel:+380970671000">097 067 10 00</a>
+          <a href="tel:+380675457747">067 545 77 47</a>
+        </div>
+        <div class="booking-hours">
+          <p>Приймаємо дзвінки: <strong>Пт–Нд, 10:00–23:00</strong></p>
+        </div>
+      </div>
+
+      <div class="booking-form-wrap reveal-right">
+        <form id="bookingForm" novalidate aria-label="Форма бронювання столика">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Ваше ім'я <span class="req">*</span></label>
+              <input type="text" id="name" name="name" class="form-input" placeholder="Ім'я та прізвище" required autocomplete="name">
+              <span class="form-error" id="nameError" role="alert">Введіть ваше ім'я</span>
+            </div>
+            <div class="form-group">
+              <label for="phone">Телефон <span class="req">*</span></label>
+              <input type="tel" id="phone" name="phone" class="form-input" placeholder="+380 XX XXX XX XX" required autocomplete="tel">
+              <span class="form-error" id="phoneError" role="alert">Введіть номер телефону</span>
+            </div>
+            <div class="form-group">
+              <label for="date">Дата <span class="req">*</span></label>
+              <input type="date" id="date" name="date" class="form-input" required>
+              <span class="form-error" id="dateError" role="alert">Оберіть дату</span>
+            </div>
+            <div class="form-group">
+              <label for="time">Час <span class="req">*</span></label>
+              <select id="time" name="time" class="form-select" required>
+                <option value="">Оберіть час</option>
+                <option>10:00</option><option>10:30</option><option>11:00</option>
+                <option>11:30</option><option>12:00</option><option>12:30</option>
+                <option>13:00</option><option>13:30</option><option>14:00</option>
+                <option>14:30</option><option>15:00</option><option>15:30</option>
+                <option>16:00</option><option>16:30</option><option>17:00</option>
+                <option>17:30</option><option>18:00</option><option>18:30</option>
+                <option>19:00</option><option>19:30</option><option>20:00</option>
+                <option>20:30</option><option>21:00</option><option>21:30</option>
+                <option>22:00</option><option>22:30</option>
+              </select>
+              <span class="form-error" id="timeError" role="alert">Оберіть час</span>
+            </div>
+            <div class="form-group full">
+              <label for="guests">Кількість гостей <span class="req">*</span></label>
+              <input type="number" id="guests" name="guests" class="form-input" min="1" max="20" placeholder="Кількість осіб" required>
+              <span class="form-error" id="guestsError" role="alert">Вкажіть кількість гостей (1–20)</span>
+            </div>
+            <div class="form-group full">
+              <label for="comment">Коментар</label>
+              <textarea id="comment" name="comment" class="form-textarea" placeholder="Особливі побажання, алергії, привід для зустрічі..."></textarea>
+            </div>
+          </div>
+          <button type="submit" class="form-submit">Надіслати заявку</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer" aria-label="Підвал сайту">
+  <div id="contacts">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div style="margin-bottom:var(--space-3);">
+            <img src="images/logo-speka.png" alt="Логотип кафе Спека" style="height:72px;width:auto;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.5));">
+          </div>
+          <p class="footer-tagline">Кафе на березі затоки Барбара<br>Смачна їжа на кожен день</p>
+          <div class="footer-socials" role="list" aria-label="Соціальні мережі">
+            <a href="https://www.instagram.com/cafespeka" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="Instagram @cafespeka" role="listitem">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="Facebook" role="listitem">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Контакти</h4>
+          <address style="font-style:normal">
+            <p>вул. Конституції, 46а<br>Горішні Плавні, Полтавська обл.</p>
+            <a href="tel:+380970671000">097 067 10 00</a>
+            <a href="tel:+380675457747">067 545 77 47</a>
+          </address>
+        </div>
+
+        <div class="footer-col">
+          <h4>Час роботи</h4>
+          <p>Пт – Нд</p>
+          <p style="color:var(--terracotta-light);font-weight:600;font-size:18px;">10:00 – 23:00</p>
+          <p style="margin-top:var(--space-2)">Мангал: Пт – Нд<br>весь день</p>
+          <p style="margin-top:var(--space-2)">Банкети та замовлення:<br>
+            <a href="tel:+380675457747">067 545 77 47</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2611.0!2d33.657!3d49.014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDnCsDAwJzUwLjQiTiAzM8KwMzknMjUuMiJF!5e0!3m2!1suk!2sua!4v1620000000000!5m2!1suk!2sua"
+          title="Карта розташування кафе Спека в Горішніх Плавнях" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Кафе Спека — Горішні Плавні</p>
+        <p>Розроблено з ❤️ для кращого кафе на березі</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div id="toast" role="alert" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+const nav = document.getElementById('nav');
+const heroEl = document.getElementById('hero');
+new IntersectionObserver(e => nav.classList.toggle('scrolled', !e[0].isIntersecting), { threshold: 0.1 }).observe(heroEl);
+
+const hamburger = document.getElementById('hamburgerBtn');
+const drawer = document.getElementById('navDrawer');
+hamburger.addEventListener('click', () => {
+  const open = drawer.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  hamburger.setAttribute('aria-expanded', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+document.getElementById('drawerClose').addEventListener('click', () => {
+  drawer.classList.remove('open'); hamburger.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', false); document.body.style.overflow = '';
+});
+drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  drawer.classList.remove('open'); hamburger.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', false); document.body.style.overflow = '';
+}));
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && drawer.classList.contains('open')) {
+    drawer.classList.remove('open'); hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', false); document.body.style.overflow = '';
+  }
+});
+
+document.querySelectorAll('.menu-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const t = tab.dataset.tab;
+    document.querySelectorAll('.menu-tab').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-selected', false); });
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active'); tab.setAttribute('aria-selected', true);
+    document.getElementById('tab-' + t).classList.add('active');
+  });
+});
+
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revObs.observe(el));
+
+const dateInput = document.getElementById('date');
+dateInput.min = new Date().toISOString().split('T')[0];
+
+function showError(inputId, errId, show) {
+  document.getElementById(inputId).classList.toggle('error', show);
+  document.getElementById(errId).classList.toggle('show', show);
+}
+
+document.getElementById('bookingForm').addEventListener('submit', e => {
+  e.preventDefault();
+  let valid = true;
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const date = document.getElementById('date').value;
+  const time = document.getElementById('time').value;
+  const guests = parseInt(document.getElementById('guests').value);
+
+  showError('name', 'nameError', !name); if (!name) valid = false;
+  showError('phone', 'phoneError', !phone || phone.length < 10); if (!phone || phone.length < 10) valid = false;
+  showError('date', 'dateError', !date); if (!date) valid = false;
+  showError('time', 'timeError', !time); if (!time) valid = false;
+  showError('guests', 'guestsError', !guests || guests < 1 || guests > 20); if (!guests || guests < 1 || guests > 20) valid = false;
+
+  if (!valid) return;
+  const toast = document.getElementById('toast');
+  toast.textContent = 'Дякуємо! Ми зв\'яжемось з вами найближчим часом 🔥';
+  toast.classList.add('show');
+  document.getElementById('bookingForm').reset();
+  setTimeout(() => toast.classList.remove('show'), 5000);
+});
+
+['name','phone','date','time','guests'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => { el.classList.remove('error'); document.getElementById(id + 'Error')?.classList.remove('show'); });
+});
+</script>
+</body>
+</html>
